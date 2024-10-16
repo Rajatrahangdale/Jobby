@@ -1,0 +1,18 @@
+.filter-allJobs-cont{
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+.filter-cont{
+    width: 35%;
+    margin-right: 2px;
+}
+.display-all-jobs-cont{
+    width: 65%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
