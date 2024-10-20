@@ -1,72 +1,68 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import './index.css'
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import "./index.css";
 
 const Login = () => {
-
   const navigate = useNavigate();
 
   const token = Cookies.get("jwtToken");
 
-    const [allValues,setValues] = useState({
-        username:"",
-        password:"",
-        showErrorMsg:false,
-        errorMsg:""
-    });
-    
-    const onSubmitUserDetails = async(e)=>{
-        e.preventDefault();
+  const [allValues, setValues] = useState({
+    username: "",
+    password: "",
+    showErrorMsg: false,
+    errorMsg: "",
+  });
 
-        
+  const onSubmitUserDetails = async (e) => {
+    e.preventDefault();
 
-        const url = "https://apis.ccbp.in/login"
+    const url = "https://apis.ccbp.in/login";
 
-        const userDetails = {
-            username: allValues.username,
-            password: allValues.password
-        }
+    const userDetails = {
+      username: allValues.username,
+      password: allValues.password,
+    };
 
-        const option = {
-            method: 'POST',
-            body: JSON.stringify(userDetails)
-        }
+    const option = {
+      method: "POST",
+      body: JSON.stringify(userDetails),
+    };
 
-        const response = await fetch(url, option);
+    const response = await fetch(url, option);
 
-        const fetchData = await response.json()
+    const fetchData = await response.json();
 
-        console.log(response);
-        console.log(fetchData);
+    console.log(response);
+    console.log(fetchData);
 
-        if(response.ok===true){
-          setValues({...allValues,showErrorMsg:false});
-          navigate("/");
-          Cookies.set("jwtToken",fetchData.jwt_token);
-        }
-        else{
-          setValues({...allValues,showErrorMsg:true,errorMsg:fetchData.error_msg});
-        }
+    if (response.ok === true) {
+      setValues({ ...allValues, showErrorMsg: false });
+      navigate("/");
+      Cookies.set("jwtToken", fetchData.jwt_token);
+    } else {
+      setValues({
+        ...allValues,
+        showErrorMsg: true,
+        errorMsg: fetchData.error_msg,
+      });
     }
+  };
 
+  const onChangeUserName = (e) => {
+    setValues({ ...allValues, username: e.target.value }); //----->{username,password}---->username:"",password:""--->update
+  };
 
-    const onChangeUserName = (e)=>{
+  const onChangePassword = (e) => {
+    setValues({ ...allValues, password: e.target.value });
+  };
 
-        setValues({...allValues,username:e.target.value}) //----->{username,password}---->username:"",password:""--->update
-    }
-
-    const onChangePassword = (e)=>{
-
-        setValues({...allValues,password:e.target.value})
-    }
-
-  useEffect(()=>{
-    if(token !== undefined){
+  useEffect(() => {
+    if (token !== undefined) {
       navigate("/");
     }
-  })
+  });
 
   return (
     <div className="login-cont">
@@ -88,9 +84,10 @@ const Login = () => {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             onChange={onChangeUserName}
+            placeholder="rahul"
           />
           <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+            We&apos;ll never share your email with anyone else.
           </div>
         </div>
         <div className="mb-3">
@@ -102,13 +99,16 @@ const Login = () => {
             className="form-control"
             id="exampleInputPassword1"
             onChange={onChangePassword}
+            placeholder="rahul@2021"
           />
         </div>
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
         <br />
-        {allValues.showErrorMsg?<p className='text-danger'>{allValues.errorMsg}</p> : null}
+        {allValues.showErrorMsg ? (
+          <p className="text-danger">{allValues.errorMsg}</p>
+        ) : null}
       </form>
     </div>
   );
