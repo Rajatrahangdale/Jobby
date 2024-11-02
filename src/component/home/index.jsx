@@ -14,7 +14,6 @@ const Home = ()=>(
             <Link to="/jobs">
             <button className='btn btn-primary home-btn'>Find Jobs</button>
             </Link>
-
         </div>
 
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
